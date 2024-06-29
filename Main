@@ -1,0 +1,240 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer 
+local ui = player.PlayerGui
+local UserInputService = game:GetService("UserInputService")
+
+local highlight = Instance.new("Highlight")
+highlight.FillColor = Color3.new(1, 1, 1)
+highlight.OutlineColor = Color3.new(0, 0, 0)
+
+local MainUI = Instance.new("ScreenGui",ui)
+MainUI.ResetOnSpawn =false
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.T then
+        if MainUI.Enabled == true then
+MainUI.Enabled = false
+else
+MainUI.Enabled = true
+        end
+    end
+end)
+
+
+	label = Instance.new("TextLabel", MainUI)
+	label.Text = "T | Toggle UI"
+	label.BackgroundColor3 = Color3.fromRGB(40,50,160)
+	label.BorderSizePixel = 0
+	label.TextColor3 = Color3.fromRGB(55,139,45)
+	label.BackgroundTransparency = 1
+	label.Size = UDim2.fromScale(0.200,0.105)
+	label.Position = UDim2.fromScale(0.003,0.91)
+	label.TextScaled = true
+	label.Name = "Mark"
+    label.ZIndex = 0
+    local stroke = Instance.new("UIStroke",label)
+
+
+local Frame = Instance.new("Frame",MainUI)
+Frame.Size = UDim2.fromScale(0.4,0.45)
+Frame.Position = UDim2.fromScale(0.3,0.3)
+Frame.BackgroundTransparency = 0.3
+Frame.BackgroundColor3 = Color3.fromRGB(70,80,90)
+local sort = Instance.new("UIListLayout", Frame)
+sort.SortOrder = Enum.SortOrder.LayoutOrder
+local stroke = Instance.new("UIStroke",Frame)
+stroke.Thickness = 6
+
+
+local highlightEsp = false
+
+local HighlightEsp = Instance.new("TextButton", Frame)
+		HighlightEsp.Size = UDim2.fromScale(1, 0.2)
+		HighlightEsp.Position = UDim2.fromScale(0,0)
+		HighlightEsp.BackgroundColor3 = Color3.fromRGB(40,10,20)
+		HighlightEsp.BorderSizePixel = 1
+		HighlightEsp.Text =  "Esp"
+       HighlightEsp.TextScaled = true
+		HighlightEsp.Name = "Button"
+       HighlightEsp.Font = 11
+		HighlightEsp.TextColor3 = Color3.fromRGB(255,255,255)
+
+HighlightEsp.MouseButton1Click:Connect(function()
+    if highlightEsp == true then
+highlightEsp = false
+HighlightEsp.BackgroundColor3 = Color3.fromRGB(40,10,20)
+for _, player in pairs(Players:GetPlayers()) do
+    local character = player.Character
+    if character then
+        for _, child in pairs(character:GetChildren()) do
+            if child.Name == "Highlight" then
+                child:Destroy()
+            end
+        end
+    end
+end
+else
+highlightEsp = true
+HighlightEsp.BackgroundColor3 = Color3.fromRGB(220,180,70)
+
+repeat 
+ task.wait(1)
+local players = game.Players:GetPlayers()
+for i,v in pairs(players) do
+    if highlightEsp == true then
+ local esp = Instance.new("Highlight")
+ esp.Name = "Highlight"
+ esp.FillTransparency = 0.8
+ esp.FillColor = Color3.new(0, 0, 0)
+ esp.OutlineColor = Color3.new(255, 255, 255)
+ esp.OutlineTransparency = 0
+ esp.Parent = v.Character
+    end
+end
+until not highlightEsp == true
+
+    end
+end)
+
+
+local BHopV = false
+
+local BHop = Instance.new("TextButton", Frame)
+		BHop.Size = UDim2.fromScale(1, 0.2)
+		BHop.Position = UDim2.fromScale(0,0)
+		BHop.BackgroundColor3 = Color3.fromRGB(40,10,20)
+		BHop.BorderSizePixel = 1
+		BHop.Text =  "BunnyHop"
+      BHop.TextScaled = true
+		BHop.Name = "Button2"
+      BHop.Font = 11
+		BHop.TextColor3 = Color3.fromRGB(255,255,255)
+
+BHop.MouseButton1Click:Connect(function()
+    if BHopV == true then
+BHopV = false
+BHop.BackgroundColor3 = Color3.fromRGB(40,10,20)
+else
+BHopV = true
+BHop.BackgroundColor3 = Color3.fromRGB(220,180,70)
+
+repeat 
+if BHopV == true then
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+task.wait(0.6)
+end
+until not BHopV == true
+
+    end
+end)
+
+
+local FlyV = false
+
+local Fly = Instance.new("TextButton", Frame)
+		Fly.Size = UDim2.fromScale(1, 0.2)
+		Fly.Position = UDim2.fromScale(0,0)
+		Fly.BackgroundColor3 = Color3.fromRGB(40,10,20)
+		Fly.BorderSizePixel = 1
+		Fly.Text =  "Fly (F)"
+      Fly.TextScaled = true
+		Fly.Name = "Button3"
+      Fly.Font = 11
+		Fly.TextColor3 = Color3.fromRGB(255,255,255)
+
+Fly.MouseButton1Click:Connect(function()
+    if FlyV == true then
+FlyV = false
+Fly.BackgroundColor3 = Color3.fromRGB(40,10,20)
+else
+FlyV = true
+Fly.BackgroundColor3 = Color3.fromRGB(220,180,70)
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.F then
+    if FlyV == true then
+FlyV = false
+Fly.BackgroundColor3 = Color3.fromRGB(40,10,20)
+else
+FlyV = true
+Fly.BackgroundColor3 = Color3.fromRGB(220,180,70)
+    end
+    end
+    end)
+local PrimaryPart = player.Character.PrimaryPart
+local flycon
+flycon = game:GetService("RunService").Heartbeat:Connect(function()
+if FlyV == true then
+				local velo = PrimaryPart.Velocity
+				PrimaryPart.Velocity = Vector3.new(velo.X, 2.04, velo.Z)
+
+				if UserInputService:IsKeyDown("Space") then
+					PrimaryPart.Velocity = Vector3.new(velo.X, 44, velo.Z)
+				end
+				if UserInputService:IsKeyDown("Q") then
+					PrimaryPart.Velocity = Vector3.new(velo.X, -44, velo.Z)
+				end
+end
+end)
+
+local SpeedV = false
+
+local Speed = Instance.new("TextButton", Frame)
+		Speed.Size = UDim2.fromScale(1, 0.2)
+		Speed.Position = UDim2.fromScale(0,0)
+		Speed.BackgroundColor3 = Color3.fromRGB(40,10,20)
+		Speed.BorderSizePixel = 1
+		Speed.Text =  "Speed"
+      Speed.TextScaled = true
+		Speed.Name = "Button3"
+      Speed.Font = 11
+		Speed.TextColor3 = Color3.fromRGB(255,255,255)
+
+Speed.MouseButton1Click:Connect(function()
+    if SpeedV == true then
+SpeedV = false
+Speed.BackgroundColor3 = Color3.fromRGB(40,10,20)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+else
+SpeedV = true
+Speed.BackgroundColor3 = Color3.fromRGB(220,180,70)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+    end
+end)
+
+local VoidV = false
+
+local Void = Instance.new("TextButton", Frame)
+		Void.Size = UDim2.fromScale(1, 0.2)
+		Void.Position = UDim2.fromScale(0,0)
+		Void.BackgroundColor3 = Color3.fromRGB(40,10,20)
+		Void.BorderSizePixel = 1
+		Void.Text =  "AntiVoid"
+      Void.TextScaled = true
+		Void.Name = "Button3"
+     Void.Font = 11
+		Void.TextColor3 = Color3.fromRGB(255,255,255)
+
+Void.MouseButton1Click:Connect(function()
+    if VoidV == true then
+VoidV = false
+Void.BackgroundColor3 = Color3.fromRGB(40,10,20)
+
+else
+VoidV = true
+Void.BackgroundColor3 = Color3.fromRGB(220,180,70)
+repeat 
+task.wait(.01)
+if VoidV == true then
+if PrimaryPart.CFrame.Y < -15 then
+PrimaryPart.CFrame = PrimaryPart.CFrame + Vector3.new(0,300,0)
+end
+end
+until not VoidV == true
+    end
+end)
